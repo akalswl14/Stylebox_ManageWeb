@@ -18,7 +18,8 @@ var EditJson = {
             if(BrandName==undefined || instaID==undefined){
                 continue
             }
-            instaID = instaID.substring(26).split('/')[0];
+            var tmpidx = instaID.indexOf('instagram.com/'); + 14;
+            instaID = instaID.substring(tmpidx).split('/')[0];
             var BrandID = "";
             var BrandSite = "";
             var BrandText = "";
@@ -75,17 +76,6 @@ var EditJson = {
 
             console.log(tmp)
             JsonData[BrandName] = tmp;
-            // JsonData[BrandName]["BrandID"] = BrandID;
-            // JsonData[BrandName]["instaID"] = instaID;
-            // JsonData[BrandName]["FollowerNum"] = FollowerNum;
-            // JsonData[BrandName]["Site"] = BrandSite;
-            // JsonData[BrandName]["Text"] = BrandText;
-            // JsonData[BrandName]["Address"] = AddressList;
-            // JsonData[BrandName]["FeedNum"] = 0;
-            // JsonData[BrandName]["NewFeedNum"] = 0;
-            // JsonData[BrandName]['TodayDownloadNum'] = 0;
-            // JsonData[BrandName]['ReviewStatus'] = "N";
-            // JsonData[BrandName]['Comment'] = ''
         }
 
         fs.writeFileSync('public/json/brand.json', JSON.stringify(JsonData), 'utf-8');

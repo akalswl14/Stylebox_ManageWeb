@@ -6,7 +6,6 @@ var router = express.Router();
 *  : /getfeed
 */
 
-var crawling = require('./crawling');
 var CheckUpdate = require('./CheckUpdate');
 var UpdateData = require('./UpdateData');
 var SelectFeed = require('./SelectFeed');

@@ -88,11 +88,11 @@ const ParseData = (brand, brandName, profileData) => {
         var EachPostId = profileData['graphql']['user']['edge_owner_to_timeline_media']['edges'][i]['node']['shortcode'];
         var PostTimeStamp = profileData['graphql']['user']['edge_owner_to_timeline_media']['edges'][i]['node']['taken_at_timestamp'];
         var ContentsNum = 1;
-        if (profileData['graphql']['user'].hasOwnProperty('edge_sidecar_to_children')) {
-            ContentsNum = profileData['graphql']['user']['edge_sidecar_to_children']['edges'].length
+        if (profileData['graphql']['user']['edge_owner_to_timeline_media']['edges'][i]['node'].hasOwnProperty('edge_sidecar_to_children')) {
+            ContentsNum = profileData['graphql']['user']['edge_owner_to_timeline_media']['edges'][i]['node']['edge_sidecar_to_children']['edges'].length
         }
         var ContentsDict = {};
-        for (var j = 0; j < ContentsNum; j++) {
+        for (var j = 1; j <= ContentsNum; j++) {
             var tmp_key = 'Contents_' + j;
             ContentsDict[tmp_key] = 0
         }

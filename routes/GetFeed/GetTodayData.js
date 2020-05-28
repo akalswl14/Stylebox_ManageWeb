@@ -11,12 +11,18 @@ var GetData = {
             if (par[key]['NewFeedNum']==0){
                 continue
             }
+            var reviewst_jsondata = ''
+            if(par[key]['ReviewStatus']=="Y"){
+                reviewst_jsondata = '<td class="YesStatus">' + par[key]['ReviewStatus'] + '</td>'
+            }else{
+                reviewst_jsondata = '<td class="NoStatus">' + par[key]['ReviewStatus'] + '</td>'
+            }
             jsondata += '<tr>'
                 + '<td class="td_chk"><input type="checkbox" name="chkbox" value='+ key +'></td>'
                 + '<td>' + key + '</td>'
                 + '<td>' + par[key]['NewFeedNum'] + '</td>'
                 + '<td>' + par[key]['TodayDownloadNum'] + '</td>'
-                + '<td>' + par[key]['ReviewStatus'] + '</td>'
+                + reviewst_jsondata
                 + '<td>' + par[key]['Comment'] + '</td>' + '</tr>';
         }
         data.todaydata = jsondata;

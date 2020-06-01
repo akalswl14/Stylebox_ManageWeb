@@ -18,7 +18,7 @@ var EditJson = {
             if(BrandName==undefined || instaID==undefined){
                 continue
             }
-            var tmpidx = instaID.indexOf('instagram.com/'); + 14;
+            var tmpidx = instaID.indexOf('instagram.com/') + 14;
             instaID = instaID.substring(tmpidx).split('/')[0];
             var BrandID = "";
             var BrandSite = "";

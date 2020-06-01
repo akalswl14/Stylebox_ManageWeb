@@ -32,3 +32,11 @@
 input[type=checkbox]{
     width:100%;
 }
+.rowdate{
+    margin:5px 10px;
+    font-size: 30px;
+    font-weight: bold;
+}
+.under_container{
+    padding:10px 0px;
+}

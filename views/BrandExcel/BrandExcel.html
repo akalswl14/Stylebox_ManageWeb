@@ -4,6 +4,9 @@
 <head>
     <title>제목</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/basic.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/excelstyle.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
     <script>
         function fboardlist_submit() {
@@ -37,13 +40,23 @@
 </head>
 
 <body>
-    <h1>브랜드엑셀페이지</h1>
-    <form onsubmit="return fboardlist_submit();" method="post" enctype="multipart/form-data">
-        <label for="myfile">Select a file:</label>
-        <!-- <input type="file" id="myfile" name="myfile" onchange="readExcel()"><br><br> -->
-        <input type="file" id="myfile" name="myfile"><br><br>
-        <input type="submit" value="Submit">
-    </form>
+    <div class="navbar">
+        <a href="/">ADMINISTRATOR</a>
+        <a class="active" href="/brandexcel">브랜드 DB 엑셀 업로드</a>
+        <a href="/styleexcel">스타일 DB 엑셀 업로드</a>
+        <a href="/getfeed">포스트별 선택 및 다운로드</a>
+        <a href="/">스타일태그 분류 및 업로드</a>
+    </div>
+    <div class="container">
+        <div class="under_container">
+            <form onsubmit="return fboardlist_submit();" method="post" enctype="multipart/form-data">
+                <label for="myfile">Select a file</label><br>
+                <!-- <input type="file" id="myfile" name="myfile" onchange="readExcel()"><br><br> -->
+                <input type="file" id="myfile" name="myfile"><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

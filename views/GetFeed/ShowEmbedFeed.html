@@ -5,6 +5,9 @@
     <title>제목</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/embedfeed.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/topbutton.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/basic.css">
     <script>
         function check_all_feed(CheckSection, AllCheck) {
             var chk = CheckSection.getElementsByTagName('input');
@@ -29,9 +32,9 @@
             }
             return true;
         }
-        function uncheck(){
+        function uncheck() {
             var chkboxList = document.getElementsByClassName('chkbox');
-            for(i=0;i<chkboxList.length;i++){
+            for (i = 0; i < chkboxList.length; i++) {
                 chkboxList[i].checked = false;
             }
         }
@@ -39,16 +42,23 @@
 </head>
 
 <body>
-    <h1>오늘의 피드</h1>
-    <form name="fboardlist" id="fboardlist" onsubmit="return fboardlist_submit(this);" method="post">
-        <div class="btn_fixed_top">
-            <input type="button" name="act_button" value="Unchecked" onclick="uncheck()"
-                class="btn_02 btn">
-            <input type="submit" name="act_button" value="Download" onclick="document.pressed=this.value"
-                class="btn_02 btn">
-        </div>
-        <%- feeddata %>
-    </form>
+    <div class="navbar">
+        <a href="/">ADMINISTRATOR</a>
+        <a href="/brandexcel">브랜드 DB 엑셀 업로드</a>
+        <a href="/styleexcel">스타일 DB 엑셀 업로드</a>
+        <a class="active" href="/getfeed">포스트별 선택 및 다운로드</a>
+        <a href="/">스타일태그 분류 및 업로드</a>
+    </div>
+    <div class="container">
+        <form name="fboardlist" id="fboardlist" onsubmit="return fboardlist_submit(this);" method="post">
+            <div class="btn_fixed_top">
+                <input type="button" name="act_button" value="Unchecked" onclick="uncheck()" class="btn_02 btn">
+                <input type="submit" name="act_button" value="Download" onclick="document.pressed=this.value"
+                    class="btn_02 btn">
+            </div>
+            <%- feeddata %>
+        </form>
+    </div>
 </body>
 
 </html>

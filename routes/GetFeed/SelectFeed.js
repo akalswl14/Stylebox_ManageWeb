@@ -23,7 +23,7 @@ var selectfeed = {
         }
         function EndEjsData(callback) {
             for (i = 0; i < DateList.length; i++) {
-                EachEjs_forDate[i] += '</div>'
+                EachEjs_forDate[i] += '</div></div>'
                 ejsdata += EachEjs_forDate[i]
             }
             callback();
@@ -61,7 +61,7 @@ var selectfeed = {
         }
         function MakeEachDateBase(callback) {
             for (i = 0; i < DateList.length; i++) {
-                tmp_ejs = '<h3>' + DateList[i] + '</h3> <div class="row">';
+                tmp_ejs = '<div class="under_container"><div class="rowdate">' + DateList[i] + '</div> <div class="row">';
                 EachEjs_forDate.push(tmp_ejs);
             }
             callback();

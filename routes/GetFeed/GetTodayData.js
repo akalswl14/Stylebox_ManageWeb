@@ -8,9 +8,6 @@ var GetData = {
         var jsondata = "";
         // 브랜드 정보를 dataArray에 array로 추가
         for (var key in par) {
-            if (par[key]['NewFeedNum']==0){
-                continue
-            }
             var reviewst_jsondata = ''
             if(par[key]['ReviewStatus']=="Y"){
                 reviewst_jsondata = '<td class="YesStatus">' + par[key]['ReviewStatus'] + '</td>'

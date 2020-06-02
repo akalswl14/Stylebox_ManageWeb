@@ -24,7 +24,7 @@ const init = async (req, res) => {
         if (JsonData.hasOwnProperty(['graphql']) && JsonData['graphql'].hasOwnProperty('shortcode_media')) {
             var dir = 'public/img/crawlingimg/' + EachUrl
             try { fs.mkdirSync(dir); } catch (e) {
-                if (e.code != 'EEXIST') throw e; // 존재할경우 패스처리함.
+                if (e.code != 'EEXIST') throw e;
             }
             var FeedData = ParseData(EachUrl, RequestJsonData[EachUrl], JsonData);
             for (var j = 0; j < RequestJsonData[EachUrl].length; j++) {
@@ -89,7 +89,6 @@ const DateConversion = (date) => {
     var month = new String(date.getMonth() + 1);
     var day = new String(date.getDate());
 
-    // 한자리수일 경우 0을 채워준다. 
     if (month.length == 1) {
         month = "0" + month;
     }
@@ -110,14 +109,14 @@ const ParseData = (FeedId, ReqContData, JsonData) => {
     FeedData['LikeNum'] = JsonData['graphql']['shortcode_media']['edge_media_preview_like']['count']
     var is_video = JsonData['graphql']['shortcode_media']['is_video']
     var ContentsList = {}
-    // igtv / 동영상 하나인 경우
+    // igtv / One video
     if (is_video == true) {
         var ContUrl = JsonData['graphql']['shortcode_media']['video_url'];
         ContentsList['Contents_1'] = ContUrl;
         var DownloadPath = 'public/img/crawlingimg/' + FeedId + '/' + 'Contents_1'
         DownloadOnLocal(ContUrl, DownloadPath)
     } else {
-        // 사진 여러장 / 동영상 여러장 / 사진과동영상 여러장
+        // Multiple Images / Multiple Videos / Multiple Images and Videos
         if (JsonData['graphql']['shortcode_media'].hasOwnProperty('edge_sidecar_to_children')) {
             Len_ContJson = JsonData['graphql']['shortcode_media']['edge_sidecar_to_children']['edges'].length;
             for (var j = 0; j < Len_ContJson; j++) {
@@ -125,11 +124,11 @@ const ParseData = (FeedId, ReqContData, JsonData) => {
                 if (ReqContData.includes(cntstr)) {
                     cntstr = 'Contents_' + String(j + 1)
                     if (JsonData['graphql']['shortcode_media']['edge_sidecar_to_children']['edges'][j]['node']['is_video']) {
-                        // 동영상 일경우
+                        // for Video
                         var ContUrl = JsonData['graphql']['shortcode_media']['edge_sidecar_to_children']['edges'][j]['node']['video_url'];
                         ContentsList[cntstr] = ContUrl;
                     } else {
-                        // 사진 일경우
+                        // for Image
                         var ContUrl = JsonData['graphql']['shortcode_media']['edge_sidecar_to_children']['edges'][j]['node']['display_url'];
                         ContentsList[cntstr] = ContUrl
                     }
@@ -138,7 +137,7 @@ const ParseData = (FeedId, ReqContData, JsonData) => {
                 }
             }
         } else {
-            //사진 한장
+            //One Image
             var ContUrl = JsonData['graphql']['shortcode_media']['display_url'];
             ContentsList['Contents_1'] = ContUrl;
             var DownloadPath = 'public/img/crawlingimg/' + FeedId + '/' + 'Contents_1'
@@ -155,8 +154,7 @@ const Scroll = async (EachUrl, page) => {
     await page.waitFor(5000);
     var element = await page.$('body > pre');
     if (element == null) {
-        console.log('element is null!');
-        console.log('로그인합니다.')
+        console.log('Login to Instagram')
         try {
             //페이지로 가라
             await page.goto('https://www.instagram.com/accounts/login/');
@@ -170,7 +168,7 @@ const Scroll = async (EachUrl, page) => {
             await page.goto(url);
             element = await page.$('body > pre');
         } catch (error) {
-            console.log('로그인 안되는 경우');
+            console.log('Cannot Login to Instagram');
             console.log(error);
             await page.screenshot({
                 fullPage: true,
@@ -186,9 +184,6 @@ const Scroll = async (EachUrl, page) => {
             return {}
         }
     }
-    // let bodyHTML = await page.evaluate(() => document.body.innerHTML);
-    // console.log(element);
-    // console.log(bodyHTML);
     var json_data = await page.evaluate(element => element.textContent, element);
     json_data = JSON.parse(json_data);
     return json_data
@@ -242,10 +237,10 @@ const MakeExcel = (excelHandler) => {
 }
 const DownloadOnLocal = (url, path) => {
     if (url.indexOf('.mp4') != -1) {
-        // 동영상 다운
+        // Download Video
         path += '.mp4'
     } else {
-        // 사진 다운
+        // Download Image
         path += '.jpg'
     }
     request(url).pipe(fs.createWriteStream(path));

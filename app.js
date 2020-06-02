@@ -19,12 +19,6 @@ app.set('view engine','ejs');
 
 app.engine('html', require('ejs').renderFile);
 
-// app.get('/', function (req, res) {
-//   res.send('Hello World!');
-// });
-// app.get('/login', function (req, res) {
-//   res.send('Hello World!');
-// });
 app.listen(3000,function(){
   console.log('Connected 3000 port!')
 });

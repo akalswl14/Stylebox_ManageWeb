@@ -2,11 +2,11 @@ var fs = require('fs')
 
 var GetData = {
     renderdata: function (req, res) {
-        // 브랜드 정보 있는 brand.json 파싱
+        // Parse brand.json
         var par = JSON.parse(fs.readFileSync('public/json/brand.json', 'utf8'));
         var data = { todaydata: '' };
         var jsondata = "";
-        // 브랜드 정보를 dataArray에 array로 추가
+        // Add Brand Information as array to dataArray
         for (var key in par) {
             var reviewst_jsondata = ''
             if(par[key]['ReviewStatus']=="Y"){
@@ -27,7 +27,7 @@ var GetData = {
                 + '<td>' + par[key]['Comment'] + '</td>' + '</tr>';
         }
         data.todaydata = jsondata;
-        //  dataArrary ejs로 추가해서 rendering
+        //  Rendering ejs with dataArrary
         res.render('GetFeed/TodayFeed.html', data);
     }
 };

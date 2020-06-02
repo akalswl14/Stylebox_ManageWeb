@@ -16,8 +16,7 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage});
 
 /**
-* BaseUrl : web.js router에 선언한 BaseUrl을 표시. request url을 쉽게 파악하기 위함
-*  : /brandexcel
+* BaseUrl : /brandexcel
 */
 
 var BrandExcel = require('./BrandExcel');
@@ -27,11 +26,6 @@ router.get('/',function(req,res){
 });
 
 router.post('/',upload.single('myfile'),function(req,res){
-    let file = req.file
-    let result = {
-        originalName : file.originalname,
-        size : file.size,
-    }
     BrandExcel.upload(req,res);
 });
 

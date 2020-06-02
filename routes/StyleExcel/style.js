@@ -16,8 +16,7 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage});
 
 /**
-* BaseUrl : web.js router에 선언한 BaseUrl을 표시. request url을 쉽게 파악하기 위함
-*  : /styleexcel
+* BaseUrl :/styleexcel
 */
 
 var StyleExcel = require('./StyleExcel');

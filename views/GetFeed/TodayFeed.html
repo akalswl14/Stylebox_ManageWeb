@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>제목</title>
+    <title>Today's Data</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/todayfeed.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/topbutton.css">
@@ -15,10 +15,10 @@
 <body>
     <div class="navbar">
         <a href="/">ADMINISTRATOR</a>
-        <a href="/brandexcel">브랜드 DB 엑셀 업로드</a>
-        <a href="/styleexcel">스타일 DB 엑셀 업로드</a>
-        <a class="active" href="/getfeed">포스트별 선택 및 다운로드</a>
-        <a href="/">스타일태그 분류 및 업로드</a>
+        <a href="/brandexcel">Upload Brand Excel</a>
+        <a href="/styleexcel">Upload Style Excel</a>
+        <a class="active" href="/getfeed">Today's Data</a>
+        <a href="/">Style Classification</a>
     </div>
     <div class="container">
         <form name="fboardlist" id="fboardlist" onsubmit="return fboardlist_submit(this);" method="post">
@@ -41,13 +41,13 @@
                                 <input type="checkbox" name="chkall" value="1" id="chkall"
                                     onclick="check_all(this.form)">
                             </th>
-                            <th scope="col">브랜드명 <button type="button" onclick="sortTable(1,true)"><i class="fa fa-sort"></i></button></th>
-                            <th scope="col">업데이트게시물수 <button type="button" onclick="sortTable(2,false)"><i class="fa fa-sort"></i></button></th>
-                            <th scope="col">오늘 다운로드 수 <button type="button" onclick="sortTable(3,false)"><i class="fa fa-sort"></i></button></th>
-                            <th scope="col">새 게시물 수 <button type="button" onclick="sortTable(4,false)"><i class="fa fa-sort"></i></button></th>
-                            <th scope="col">누적 다운로드 수 <button type="button" onclick="sortTable(5,false)"><i class="fa fa-sort"></i></button></th>
-                            <th scope="col">팔로워 수 <button type="button" onclick="sortTable(6,false)"><i class="fa fa-sort"></i></button></th>
-                            <th scope="col">인스타주소 <button type="button" onclick="sortTable(7,true)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">Brnad <button type="button" onclick="sortTable(1,true)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">UpdatedFeed <button type="button" onclick="sortTable(2,false)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">TodayDownload <button type="button" onclick="sortTable(3,false)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">NewFeed <button type="button" onclick="sortTable(4,false)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">Download <button type="button" onclick="sortTable(5,false)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">Follower <button type="button" onclick="sortTable(6,false)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">Instagram <button type="button" onclick="sortTable(7,true)"><i class="fa fa-sort"></i></button></th>
                             <th scope="col">reviewstatus <button type="button"
                                     onclick="sortTable(8,true)"><i class="fa fa-sort"></i></button></th>
                             <th scope="col">comments</th>

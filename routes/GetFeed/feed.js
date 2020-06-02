@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /**
-* BaseUrl : web.js router에 선언한 BaseUrl을 표시. request url을 쉽게 파악하기 위함
-*  : /getfeed
+* BaseUrl :/getfeed
 */
 
 var CheckUpdate = require('./CheckUpdate');
@@ -13,7 +12,6 @@ var MakeDownload = require('./MakeDownloadJson');
 
 router.get('/',function(req,res){
     CheckUpdate.checkdate(req,res);
-    // res.render('GetFeed/TodayFeed.html');
 });
 
 router.post('/',function(req,res){

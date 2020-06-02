@@ -83,8 +83,6 @@ var EditJson = {
             }else{
                 tmp["Comment"] = "";
             }
-
-            console.log(tmp)
             JsonData[BrandName] = tmp;
         }
 

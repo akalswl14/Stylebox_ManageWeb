@@ -12,11 +12,11 @@ const init = async (req, res) => {
     Len_BrandList = Object.keys(BrandList).length;
     for (var i = 0; i < Len_BrandList; i++) {
         console.log('for문')
-        //  브랜드 정보를 0 또는 ""로 초기화
+        //  Reset Brand information to 0 or ""
         var eachBrand = Object.keys(BrandList)[i];
         BrandList[eachBrand]['TodayDownloadNum'] = 0
         BrandList[eachBrand]['Comment'] = ""
-        // 새 게시물, 팔로워 정보, 게시물 수 정보 업데이트, url 리스트 크롤링
+        // NewFeedNum, UpdateFeedNum, FollowerNum, Feed information, etc scraping
         console.log(eachBrand);
         var profileData = await Scroll(BrandList[eachBrand], page);
         console.log(profileData.hasOwnProperty(['graphql']));
@@ -60,7 +60,6 @@ const DateConversion = (date) => {
     var month = new String(date.getMonth() + 1);
     var day = new String(date.getDate());
 
-    // 한자리수일 경우 0을 채워준다. 
     if (month.length == 1) {
         month = "0" + month;
     }
@@ -91,7 +90,6 @@ const ParseData = (brand, brandName, profileData) => {
     }
     brand['FeedNum'] = OriginalPostNum;
     for (var i = 0; i < UpdateFeedNum; i++) {
-        console.log('i는 ' + i);
         var EachPostId = profileData['graphql']['user']['edge_owner_to_timeline_media']['edges'][i]['node']['shortcode'];
         var PostTimeStamp = profileData['graphql']['user']['edge_owner_to_timeline_media']['edges'][i]['node']['taken_at_timestamp'];
         var ContentsNum = 1;
@@ -123,8 +121,7 @@ const Scroll = async (brand, page) => {
     await page.waitFor(5000);
     var element = await page.$('body > pre');
     if (element == null) {
-        console.log('element is null!');
-        console.log('로그인합니다.')
+        console.log('Login to instagram')
         try {
             //페이지로 가라
             await page.goto('https://www.instagram.com/accounts/login/');
@@ -139,7 +136,7 @@ const Scroll = async (brand, page) => {
             await page.goto(url);
             element = await page.$('body > pre');
         } catch (error) {
-            console.log('로그인 안되는 경우');
+            console.log('Cannot Login to Instagram');
             console.log(error);
             await page.screenshot({
                 fullPage: true,
@@ -155,9 +152,6 @@ const Scroll = async (brand, page) => {
             return {}
         }
     }
-    // let bodyHTML = await page.evaluate(() => document.body.innerHTML);
-    // console.log(element);
-    // console.log(bodyHTML);
     var json_data = await page.evaluate(element => element.textContent, element);
     json_data = JSON.parse(json_data);
     return json_data

@@ -4,7 +4,6 @@ var EditJson = require('./EditJson');
 
 var StyleExcel = {
     upload : function (req,res){
-        // 엑셀 업로드하면 json으로 변환해서 저장하는 것
         const workbook = XLSX.readFile('public/excel/style.xlsx');
         var json_data = {}
         let i = workbook.SheetNames.length;

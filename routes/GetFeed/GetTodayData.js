@@ -14,6 +14,7 @@ var GetData = {
             }else{
                 reviewst_jsondata = '<td class="NoStatus">' + par[key]['ReviewStatus'] + '</td>'
             }
+            var insta_url = 'http://www.instagram.com/'+par[key]['instaID'];
             jsondata += '<tr>'
                 + '<td class="td_chk"><input type="checkbox" name="chkbox" value='+ key +'></td>'
                 + '<td>' + key + '</td>'
@@ -22,7 +23,7 @@ var GetData = {
                 + '<td>' + par[key]['NewFeedNum'] + '</td>'
                 + '<td>' + par[key]['DownloadNum'] + '</td>'
                 + '<td>' + par[key]['FollowerNum'] + '</td>'
-                + '<td>' + par[key]['instaID'] + '</td>'
+                + '<td>' + '<a href="'+insta_url+'" class="fa fa-instagram"></a>'+ '</td>'
                 + reviewst_jsondata
                 + '<td>' + par[key]['Comment'] + '</td>' + '</tr>';
         }

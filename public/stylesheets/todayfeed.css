@@ -10,23 +10,23 @@ td.YesStatus{
     color: black;
 }
 
-.brand_table {
+#brand_table {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
     text-align: center;
   }
   
-.brand_table td, #customers th {
+#brand_table td, #customers th {
     border: 1px solid #ddd;
     padding: 8px;
   }
   
-.brand_table tr:nth-child(even){background-color: #f2f2f2;}
+#brand_table tr:nth-child(even){background-color: #f2f2f2;}
   
-.brand_table tr:hover {background-color: #ddd;}
+#brand_table tr:hover {background-color: #ddd;}
   
-.brand_table th {
+#brand_table th {
     padding-top: 12px;
     padding-bottom: 12px;
     background-color: rgb(146, 211, 255);

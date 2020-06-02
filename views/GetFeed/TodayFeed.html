@@ -8,30 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/topbutton.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/basic.css">
-    <script>
-        function check_all(f) {
-            var chk = document.getElementsByName("chkbox");
-            for (i = 0; i < chk.length; i++)
-                chk[i].checked = f.chkall.checked;
-        }
-        function is_checked(elements_name) {
-            var checked = false;
-            var chk = document.getElementsByName(elements_name);
-            for (var i = 0; i < chk.length; i++) {
-                if (chk[i].checked) {
-                    checked = true;
-                }
-            }
-            return checked;
-        }
-        function fboardlist_submit(f) {
-            if (!is_checked("chkbox")) {
-                alert(document.pressed + " 하실 항목을 하나 이상 선택하세요.");
-                return false;
-            }
-            return true;
-        }
-    </script>
+    <script type="text/javascript" src="/js/todayfeed.js"></script>
 </head>
 
 <body>
@@ -54,17 +31,21 @@
                     class="btn_02 btn">
             </div>
             <div class="under_container">
-                <table class="brand_table">
+                <table id="brand_table">
                     <thead>
                         <tr>
                             <th scope="col">
                                 <input type="checkbox" name="chkall" value="1" id="chkall"
                                     onclick="check_all(this.form)">
                             </th>
-                            <th scope="col">브랜드명</th>
-                            <th scope="col">새 게시물 수</th>
-                            <th scope="col">다운로드수</th>
-                            <th scope="col">reviewstatus</th>
+                            <th scope="col">브랜드명 <button type="button" onclick="sortTable(1,true)">▲</button><button
+                                    type="button" onclick="sortTable(1,false)">▼</button></th>
+                            <th scope="col">새 게시물 수 <button type="button" onclick="sortTable(2,true)">▲</button><button
+                                    type="button" onclick="sortTable(2,false)">▼</button></th>
+                            <th scope="col">다운로드수 <button type="button" onclick="sortTable(3,true)">▲</button><button
+                                    type="button" onclick="sortTable(3,false)">▼</button></th>
+                            <th scope="col">reviewstatus <button type="button" onclick="sortTable(4,true)">▲</button><button
+                                    type="button" onclick="sortTable(4,false)">▼</button></th>
                             <th scope="col">comments</th>
                         </tr>
                     </thead>

@@ -21,15 +21,15 @@ var UpdateData = {
         fs.writeFileSync('public/json/LastUpdateDate.json', JSON.stringify(json_data), 'utf-8');
         GetTodayData.renderdata(req, res);
     },
-    update_date_toYesterday:function(req,res){
+    update_date_toYesterday: function (req, res) {
         var selectDate = TodayDate.split("-");
         var changeDate = new Date();
-        changeDate.setFullYear(selectDate[0], selectDate[1]-1, selectDate[2]-1);
+        changeDate.setFullYear(selectDate[0], selectDate[1] - 1, selectDate[2] - 1);
         var y = changeDate.getFullYear();
         var m = changeDate.getMonth() + 1;
         var d = changeDate.getDate();
-        if(m < 10)    { m = "0" + m; }
-        if(d < 10)    { d = "0" + d; }
+        if (m < 10) { m = "0" + m; }
+        if (d < 10) { d = "0" + d; }
         var YesterdayDate = y + "-" + m + "-" + d;
         var json_data = { 'lastupdatedate': YesterdayDate }
         fs.writeFileSync('public/json/LastUpdateDate.json', JSON.stringify(json_data), 'utf-8');
@@ -70,6 +70,20 @@ var UpdateData = {
         } else {
             for (i = 0; i < BrandList.length; i++) {
                 JsonData[BrandList[i]].Comment = input_comments;
+            }
+        }
+        fs.writeFileSync('public/json/brand.json', JSON.stringify(JsonData), 'utf-8');
+        GetTodayData.renderdata(req, res);
+    },
+    delete_brand: function (req, res) {
+        BrandList = req.body.chkbox;
+        const DataBuffer = fs.readFileSync('public/json/brand.json');
+        var JsonData = JSON.parse(DataBuffer.toString());
+        if (typeof (BrandList) === 'string') {
+            delete JsonData[BrandList];
+        } else {
+            for (i = 0; i < BrandList.length; i++) {
+                delete JsonData[BrandList[i]];
             }
         }
         fs.writeFileSync('public/json/brand.json', JSON.stringify(JsonData), 'utf-8');

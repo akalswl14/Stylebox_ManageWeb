@@ -21,6 +21,8 @@ router.post('/',function(req,res){
         UpdateData.update_reviewstatus(req,res);
     }else if(req.body.act_button == "modify comments"){
         UpdateData.update_comments(req,res);
+    }else if(req.body.act_button == "delete brand"){
+        UpdateData.delete_brand(req,res);
     }else{
         console.log(req.body);
         if (typeof(req.body.chkbox)=='string'){

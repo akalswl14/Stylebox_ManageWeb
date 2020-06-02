@@ -36,3 +36,9 @@ td.YesStatus{
 .fa-instagram {
   color: black;
 }
+th button{
+  padding: 0px 10px;
+  border: none;
+  background: none;
+  color: rgb(224, 255, 255);
+}

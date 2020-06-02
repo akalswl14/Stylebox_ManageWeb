@@ -53,6 +53,11 @@ var EditJson = {
             }else{
                 tmp["FeedNum"] = 0;
             }
+            if(JsonData.hasOwnProperty(BrandName)&&JsonData[BrandName].hasOwnProperty('UpdateFeedNum')){
+                tmp["UpdateFeedNum"] = JsonData[BrandName]['UpdateFeedNum']
+            }else{
+                tmp["UpdateFeedNum"] = 0;
+            }
             if(JsonData.hasOwnProperty(BrandName)&&JsonData[BrandName].hasOwnProperty('NewFeedNum')){
                 tmp["NewFeedNum"] = JsonData[BrandName]['NewFeedNum']
             }else{
@@ -62,6 +67,11 @@ var EditJson = {
                 tmp["TodayDownloadNum"] = JsonData[BrandName]['TodayDownloadNum']
             }else{
                 tmp["TodayDownloadNum"] = 0;
+            }
+            if(JsonData.hasOwnProperty(BrandName)&&JsonData[BrandName].hasOwnProperty('DownloadNum')){
+                tmp["DownloadNum"] = JsonData[BrandName]['DownloadNum']
+            }else{
+                tmp["DownloadNum"] = 0;
             }
             if(JsonData.hasOwnProperty(BrandName)&&JsonData[BrandName].hasOwnProperty('ReviewStatus')){
                 tmp["ReviewStatus"] = JsonData[BrandName]['ReviewStatus']

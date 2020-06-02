@@ -20,10 +20,11 @@ function fboardlist_submit(f) {
     }
     return true;
 }
-function sortTable(n, dir) {
-    var table, rows, switching, i, x, y, shouldSwitch;
+function sortTable(n, type) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("brand_table");
     switching = true;
+    dir = true;
     while (switching) {
         switching = false;
         rows = table.rows;
@@ -32,20 +33,42 @@ function sortTable(n, dir) {
             x = rows[i].getElementsByTagName("TD")[n];
             y = rows[i + 1].getElementsByTagName("TD")[n];
             if (dir == true) {
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    break;
+                if (type == false) {
+                    if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+
+                    }
                 }
             } else if (dir == false) {
-                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    break;
+                if (type == false) {
+                    if (Number(x.innerHTML) < Number(y.innerHTML)) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+
+                    }
                 }
             }
         }
         if (shouldSwitch) {
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
             switching = true;
+            switchcount++;
+        } else {
+            if (switchcount == 0 && dir == true) {
+                dir = false;
+                switching = true;
+            }
         }
     }
 }

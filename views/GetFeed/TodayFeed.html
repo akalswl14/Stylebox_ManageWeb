@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/topbutton.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/basic.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="/js/todayfeed.js"></script>
 </head>
 
@@ -38,14 +39,15 @@
                                 <input type="checkbox" name="chkall" value="1" id="chkall"
                                     onclick="check_all(this.form)">
                             </th>
-                            <th scope="col">브랜드명 <button type="button" onclick="sortTable(1,true)">▲</button><button
-                                    type="button" onclick="sortTable(1,false)">▼</button></th>
-                            <th scope="col">새 게시물 수 <button type="button" onclick="sortTable(2,true)">▲</button><button
-                                    type="button" onclick="sortTable(2,false)">▼</button></th>
-                            <th scope="col">다운로드수 <button type="button" onclick="sortTable(3,true)">▲</button><button
-                                    type="button" onclick="sortTable(3,false)">▼</button></th>
-                            <th scope="col">reviewstatus <button type="button" onclick="sortTable(4,true)">▲</button><button
-                                    type="button" onclick="sortTable(4,false)">▼</button></th>
+                            <th scope="col">브랜드명 <button type="button" onclick="sortTable(1,true)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">업데이트게시물수 <button type="button" onclick="sortTable(2,false)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">오늘 다운로드 수 <button type="button" onclick="sortTable(3,false)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">새 게시물 수 <button type="button" onclick="sortTable(4,false)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">누적 다운로드 수 <button type="button" onclick="sortTable(5,false)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">팔로워 수 <button type="button" onclick="sortTable(6,false)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">인스타주소 <button type="button" onclick="sortTable(7,true)"><i class="fa fa-sort"></i></button></th>
+                            <th scope="col">reviewstatus <button type="button"
+                                    onclick="sortTable(8,true)"><i class="fa fa-sort"></i></button></th>
                             <th scope="col">comments</th>
                         </tr>
                     </thead>

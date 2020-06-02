@@ -17,8 +17,12 @@ var GetData = {
             jsondata += '<tr>'
                 + '<td class="td_chk"><input type="checkbox" name="chkbox" value='+ key +'></td>'
                 + '<td>' + key + '</td>'
-                + '<td>' + par[key]['NewFeedNum'] + '</td>'
+                + '<td>' + par[key]['UpdateFeedNum'] + '</td>'
                 + '<td>' + par[key]['TodayDownloadNum'] + '</td>'
+                + '<td>' + par[key]['NewFeedNum'] + '</td>'
+                + '<td>' + par[key]['DownloadNum'] + '</td>'
+                + '<td>' + par[key]['FollowerNum'] + '</td>'
+                + '<td>' + par[key]['instaID'] + '</td>'
                 + reviewst_jsondata
                 + '<td>' + par[key]['Comment'] + '</td>' + '</tr>';
         }

@@ -22,6 +22,12 @@ const init = async (req, res) => {
         console.log(profileData.hasOwnProperty(['graphql']));
         if (profileData.hasOwnProperty(['graphql']) && profileData['graphql'].hasOwnProperty('user')) {
             BrandList[eachBrand] = ParseData(BrandList[eachBrand], eachBrand, profileData);
+        }else{
+            if( BrandList[eachBrand]['reviewstatus'] == 'Y'){
+                BrandList[eachBrand]['UpdateFeedNum'] = 0
+            }
+            BrandList[eachBrand]['reviewstatus'] = 'N';
+            BrandList[eachBrand]['NewFeedNum'] = 0
         }
         UpdateBrandJson(BrandList);
     }
@@ -72,18 +78,19 @@ const ParseData = (brand, brandName, profileData) => {
     var OriginalFollowerNum = profileData['graphql']['user']['edge_followed_by']['count'];
     brand['FollowerNum'] = OriginalFollowerNum;
     var OriginalPostNum = profileData['graphql']['user']['edge_owner_to_timeline_media']['count'];
-    var NewFeedNum = OriginalPostNum - dataFeedNum;
-    if (NewFeedNum > 12) {
-        NewFeedNum = 12;
+    var UpdateFeedNum = OriginalPostNum - dataFeedNum;
+    brand['NewFeedNum'] = UpdateFeedNum;
+    if (UpdateFeedNum > 12) {
+        UpdateFeedNum = 12;
     }
     if (brand['ReviewStatus'] == 'N') {
-        brand['NewFeedNum'] += NewFeedNum;
+        brand['UpdateFeedNum'] += UpdateFeedNum;
     } else {
-        brand['NewFeedNum'] = NewFeedNum;
+        brand['UpdateFeedNum'] = UpdateFeedNum;
         brand['ReviewStatus'] = 'N'
     }
     brand['FeedNum'] = OriginalPostNum;
-    for (var i = 0; i < NewFeedNum; i++) {
+    for (var i = 0; i < UpdateFeedNum; i++) {
         console.log('i는 ' + i);
         var EachPostId = profileData['graphql']['user']['edge_owner_to_timeline_media']['edges'][i]['node']['shortcode'];
         var PostTimeStamp = profileData['graphql']['user']['edge_owner_to_timeline_media']['edges'][i]['node']['taken_at_timestamp'];

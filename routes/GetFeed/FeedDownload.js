@@ -34,6 +34,7 @@ const init = async (req, res) => {
             CrawlingData[EachUrl]['DownloadNum'] += 1
             var BrandName = CrawlingData[EachUrl]['brand']
             BrandData[BrandName]['TodayDownloadNum'] += 1
+            BrandData[BrandName]['DownloadNum'] += 1
             FeedData['Brand'] = BrandName;
             DownloadJsonData[EachUrl] = FeedData;
         }

@@ -40,7 +40,6 @@ router.post('/',function(req,res){
         res.redirect('/getfeed/selectfeed?'+queryData);
     }
 });
-
 router.get('/selectfeed',function(req,res){
     SelectFeed.getembed(req,res);
 });

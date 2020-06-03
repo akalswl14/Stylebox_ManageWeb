@@ -33,6 +33,12 @@ var selectfeed = {
                 var feedid = DataList[i];
                 var DownloadNum = JsonData[feedid].DownloadNum;
                 var ContentsNum = JsonData[feedid].ContentsNum;
+                var Check = JsonData[feedid].Check;
+                if(Check == false){
+                    var newstatus = 'New Feed';
+                }else{
+                    var newstatus = '<br>';
+                }
                 var date = JsonData[feedid].Date;
                 var idx = DateList.indexOf(date);
                 var embedurl = ''
@@ -44,6 +50,7 @@ var selectfeed = {
                 tmp = '<div class="EachEmbed">'
                     + '<iframe src="https://www.instagram.com/p/'
                     + embedurl + '" frameborder="0" scrolling="no"allowtransparency="true"></iframe>'
+                    + '<div class="NewStatusArea">'+newstatus+'</div>'
                     + '<div class="SelectArea"><div class="DownloadNum">다운로드 : '
                     + DownloadNum + '</div>'
                     + '<div class="SelectImage">'

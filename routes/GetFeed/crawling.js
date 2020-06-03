@@ -108,6 +108,7 @@ const ParseData = (brand, brandName, profileData) => {
         FeedData['brand'] = brandName;
         FeedData['CrawlingDate'] = DateConversion(new Date());
         FeedData['DownloadNum'] = 0;
+        FeedData['Check'] = false;
         CrawlingData[EachPostId] = FeedData;
     }
     UpdateCrawlingFeedJson(CrawlingData);
@@ -130,6 +131,7 @@ const Scroll = async (brand, page) => {
             await page.waitForSelector('input[name="username"]');
             await page.type('input[name="username"]', insta_id);
             await page.type('input[name="password"]', insta_pw);
+            await page.waitFor(1000);
             await page.click('button[type="submit"]');
 
             await page.waitFor(5000);
@@ -152,6 +154,10 @@ const Scroll = async (brand, page) => {
             return {}
         }
     }
+    await page.screenshot({
+        fullPage: true,
+        path: `public/img/crawling_screenshot/example_afterlogin.jpeg`
+    })
     var json_data = await page.evaluate(element => element.textContent, element);
     json_data = JSON.parse(json_data);
     return json_data

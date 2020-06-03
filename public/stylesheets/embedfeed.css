@@ -6,13 +6,21 @@
     align-content: space-around;
     grid-column-gap: 10px;
     padding: 0 20px 0 20px;
+    height: fit-content;
   }
 .EachCheck{
     display: inline-block;
 }
 .EachEmbed{
     text-align: center;
-    height: 670px;
+    height: fit-content;
+}
+.NewStatusArea{
+    width:20vw;
+    display: inline-block;
+    font-size: 20px;
+    color: red;
+    font-weight: bold;
 }
 .SelectArea{
     width:20vw;
@@ -25,6 +33,7 @@
 }
 .row iframe{
     height: 597px;
+    width: 100%;
 }
 .un_chkbox{
     display: none;

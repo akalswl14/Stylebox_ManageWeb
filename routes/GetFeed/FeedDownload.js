@@ -2,6 +2,8 @@ var fs = require('fs');
 const puppeteer = require('puppeteer');
 var XLSX = require('XLSX');
 var request = require('request');
+var AdmZip = require('adm-zip');
+var stream = require('stream');
 var baseUrl = 'https://www.instagram.com/';
 const insta_id = 'PUT YOUR ID HERE';
 const insta_pw = 'PUT YOUR PW HERE';
@@ -23,16 +25,16 @@ const init = async (req, res) => {
         console.log(JsonData.hasOwnProperty(['graphql']));
         if (JsonData.hasOwnProperty(['graphql']) && JsonData['graphql'].hasOwnProperty('shortcode_media')) {
             var dir = 'public/img/crawlingimg/' + EachUrl
+            var BrandName = CrawlingData[EachUrl]['brand']
             try { fs.mkdirSync(dir); } catch (e) {
                 if (e.code != 'EEXIST') throw e;
             }
-            var FeedData = ParseData(EachUrl, RequestJsonData[EachUrl], JsonData);
+            var FeedData = ParseData(EachUrl,BrandName, RequestJsonData[EachUrl], JsonData);
             for (var j = 0; j < RequestJsonData[EachUrl].length; j++) {
                 tmp = 'Contents_' + String(j + 1);
                 CrawlingData[EachUrl]['Contents'][tmp] += 1
             }
             CrawlingData[EachUrl]['DownloadNum'] += 1
-            var BrandName = CrawlingData[EachUrl]['brand']
             BrandData[BrandName]['TodayDownloadNum'] += 1
             BrandData[BrandName]['DownloadNum'] += 1
             FeedData['Brand'] = BrandName;
@@ -45,7 +47,16 @@ const init = async (req, res) => {
     await browser.close();
     var excelHandler = MakeExcelData(RequestJsonData)
     MakeExcel(excelHandler);
-    res.redirect('/');
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    var willSendthis = DownloadZip();
+    // res.redirect('/');
+    var readStream = new stream.PassThrough();
+    readStream.end(willSendthis);
+    res.set('Content-disposition', 'attachment; filename=' + 'DownloadData.zip');
+    res.set('Content-Type','application/octet-stream');
+    res.send(willSendthis);
+    // readStream.pipe(res);
+    // res.download(willSendthis,'DownloadData.zip');
 };
 const GetUrlList = () => {
     console.log('GetUrlList')
@@ -98,7 +109,7 @@ const DateConversion = (date) => {
     var rtnDate = year + '-' + month + '-' + day;
     return rtnDate;
 }
-const ParseData = (FeedId, ReqContData, JsonData) => {
+const ParseData = (FeedId,BrandName, ReqContData, JsonData) => {
     var FeedData = {}
     console.log('parsing data');
     console.log(JsonData['graphql']['shortcode_media']['owner']['username'])
@@ -112,35 +123,36 @@ const ParseData = (FeedId, ReqContData, JsonData) => {
     // igtv / One video
     if (is_video == true) {
         var ContUrl = JsonData['graphql']['shortcode_media']['video_url'];
-        ContentsList['Contents_1'] = ContUrl;
-        var DownloadPath = 'public/img/crawlingimg/' + FeedId + '/' + 'Contents_1'
+        var filename = BrandName+'_'+ FeedId + '_' + 'Contents_1';
+        ContentsList[filename] = ContUrl;
+        var DownloadPath = 'public/DownloadData/' + filename
         DownloadOnLocal(ContUrl, DownloadPath)
     } else {
         // Multiple Images / Multiple Videos / Multiple Images and Videos
         if (JsonData['graphql']['shortcode_media'].hasOwnProperty('edge_sidecar_to_children')) {
             Len_ContJson = JsonData['graphql']['shortcode_media']['edge_sidecar_to_children']['edges'].length;
             for (var j = 0; j < Len_ContJson; j++) {
-                var cntstr = String(j + 1);
-                if (ReqContData.includes(cntstr)) {
-                    cntstr = 'Contents_' + String(j + 1)
+                if (ReqContData.includes(String(j + 1))) {
+                    var filename = BrandName+'_'+ FeedId + '_' +'Contents_' + String(j + 1);
                     if (JsonData['graphql']['shortcode_media']['edge_sidecar_to_children']['edges'][j]['node']['is_video']) {
                         // for Video
                         var ContUrl = JsonData['graphql']['shortcode_media']['edge_sidecar_to_children']['edges'][j]['node']['video_url'];
-                        ContentsList[cntstr] = ContUrl;
+                        ContentsList[filename] = ContUrl;
                     } else {
                         // for Image
                         var ContUrl = JsonData['graphql']['shortcode_media']['edge_sidecar_to_children']['edges'][j]['node']['display_url'];
-                        ContentsList[cntstr] = ContUrl
+                        ContentsList[filename] = ContUrl
                     }
-                    var DownloadPath = 'public/img/crawlingimg/' + FeedId + '/' + cntstr
+                    var DownloadPath = 'public/DownloadData/' +filename;
                     DownloadOnLocal(ContUrl, DownloadPath)
                 }
             }
         } else {
             //One Image
             var ContUrl = JsonData['graphql']['shortcode_media']['display_url'];
-            ContentsList['Contents_1'] = ContUrl;
-            var DownloadPath = 'public/img/crawlingimg/' + FeedId + '/' + 'Contents_1'
+            var filename = BrandName+'_'+ FeedId + '_' + 'Contents_1';
+            ContentsList[filename] = ContUrl;
+            var DownloadPath = 'public/DownloadData/' +filename;
             DownloadOnLocal(ContUrl, DownloadPath)
         }
     }
@@ -190,7 +202,7 @@ const Scroll = async (EachUrl, page) => {
 }
 const MakeExcelData = (RequestJsonData) => {
     console.log('MakeExcelData');
-    var ColumnNameList = ['FeedId', 'Date', 'Brand', 'ContentsNumber', 'ContentsUrl', 'LikeNum', 'HashTagList', 'Text'];
+    var ColumnNameList = ['PictureId','FeedId', 'Date', 'Brand', 'ContentsNumber', 'ContentsUrl', 'LikeNum', 'HashTagList', 'Text'];
     var DownloadJsonData = GetDownloadDataJson();
     var KeyList = Object.keys(RequestJsonData);
     var ExcelDataList = [ColumnNameList];
@@ -200,10 +212,11 @@ const MakeExcelData = (RequestJsonData) => {
         for (var j = 0; j < ContNumList.length; j++) {
             var EachContKey = ContNumList[j];
             tmpList = [];
+            tmpList.push(EachContKey);
             tmpList.push(EachKey);
             tmpList.push(DownloadJsonData[EachKey]['Date']);
             tmpList.push(DownloadJsonData[EachKey]['Brand']);
-            tmpList.push(EachContKey);
+            tmpList.push('Contents_'+(j+1));
             tmpList.push(DownloadJsonData[EachKey]['Contents'][EachContKey]);
             tmpList.push(DownloadJsonData[EachKey]['LikeNum']);
             tmpList.push(DownloadJsonData[EachKey]['TagList']);
@@ -211,9 +224,18 @@ const MakeExcelData = (RequestJsonData) => {
             ExcelDataList.push(tmpList);
         }
     }
+    var files = fs.readdirSync('public/DownloadData');
+    var cnt = 1;
+    while(true){
+        if(files.includes('DownloadCrawling_'+cnt+'.xlsx')){
+            cnt++;
+        }else{
+            break;
+        }
+    }
     var excelHandler = {
         getExcelFileName: function () {
-            return 'public/excel/DownloadCrawling.xlsx';
+            return 'public/DownloadData/DownloadCrawling_'+cnt+'.xlsx';
         },
         getSheetName: function () {
             return 'DownloadData';
@@ -244,6 +266,14 @@ const DownloadOnLocal = (url, path) => {
         path += '.jpg'
     }
     request(url).pipe(fs.createWriteStream(path));
+}
+const DownloadZip = () => {
+    var zip = new AdmZip();
+    var files = fs.readdirSync('public/DownloadData');
+    for(var i=0;i<files.length;i++){
+        zip.addLocalFile('public/DownloadData/'+files[i]);
+    }
+    return zip.toBuffer();
 }
 
 var downloadcrawling = {

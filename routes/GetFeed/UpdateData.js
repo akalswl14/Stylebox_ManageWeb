@@ -13,7 +13,20 @@ if (day.length == 1) {
     day = "0" + day;
 }
 TodayDate = year + '-' + month + '-' + day;
-
+const UpdateCrawlingFeed = (BrandList) => {
+    console.log('UpdateCrawlingFeed')
+    var DataBuffer = fs.readFileSync('public/json/CrawlingFeed.json');
+    var CrawlingData = JSON.parse(DataBuffer.toString());
+    FeedIdList = Object.keys(CrawlingData)
+    Len_FeedList = FeedIdList.length;
+    for (var i = 0; i < Len_FeedList; i++) {
+        var FeedId = FeedIdList[i];
+        if(BrandList.includes(CrawlingData[FeedId]['brand'])){
+            CrawlingData[FeedId]['Check'] = true;
+        }
+    }
+    fs.writeFileSync('public/json/CrawlingFeed.json', JSON.stringify(CrawlingData), 'utf-8');
+};
 var UpdateData = {
     update_date: function (req, res) {
         var json_data = { 'lastupdatedate': TodayDate }
@@ -45,6 +58,7 @@ var UpdateData = {
             } else {
                 JsonData[BrandList].ReviewStatus = "Y"
             }
+            BrandList = [BrandList];
         } else {
             for (i = 0; i < BrandList.length; i++) {
                 CurrentStatus = JsonData[BrandList[i]].ReviewStatus;
@@ -55,6 +69,7 @@ var UpdateData = {
                 }
             }
         }
+        UpdateCrawlingFeed(BrandList);
         fs.writeFileSync('public/json/brand.json', JSON.stringify(JsonData), 'utf-8');
         GetTodayData.renderdata(req, res);
     },

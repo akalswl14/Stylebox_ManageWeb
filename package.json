@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/akalswl14/Stylebox_ManageWeb#readme",
   "dependencies": {
+    "adm-zip": "^0.4.14",
     "body-parser": "^1.19.0",
     "ejs": "^3.1.2",
     "express": "^4.17.1",

@@ -19,6 +19,7 @@ app.set('view engine','ejs');
 
 app.engine('html', require('ejs').renderFile);
 
-app.listen(3000,function(){
+const server = app.listen(3000,function(){
+  server.setTimeout( 30 * 60 * 1000 );
   console.log('Connected 3000 port!')
 });

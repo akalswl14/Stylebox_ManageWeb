@@ -20,6 +20,7 @@ var GetData = {
                 + '<td>' + key + '</td>'
                 + '<td>' + par[key]['UpdateFeedNum'] + '</td>'
                 + '<td>' + par[key]['TodayDownloadNum'] + '</td>'
+                + '<td>' + par[key]['FeedNum'] + '</td>'
                 + '<td>' + par[key]['NewFeedNum'] + '</td>'
                 + '<td>' + par[key]['DownloadNum'] + '</td>'
                 + '<td>' + par[key]['FollowerNum'] + '</td>'

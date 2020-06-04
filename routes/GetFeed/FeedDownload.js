@@ -5,8 +5,8 @@ var request = require('request');
 var AdmZip = require('adm-zip');
 var stream = require('stream');
 var baseUrl = 'https://www.instagram.com/';
-const insta_id = 'PUT YOUR ID HERE';
-const insta_pw = 'PUT YOUR PW HERE';
+var SelectAccount = require('./SelectAccount');
+
 
 const init = async (req, res) => {
     var RequestJsonData = GetUrlList();
@@ -166,7 +166,12 @@ const Scroll = async (EachUrl, page) => {
     await page.waitFor(5000);
     var element = await page.$('body > pre');
     if (element == null) {
-        console.log('Login to Instagram')
+        console.log('Login to instagram')
+        var accoutinfo = SelectAccount.selectaccount();
+        console.log("ID is "+accoutinfo[0]);
+        console.log("PW is "+accoutinfo[1]);
+        const insta_id = accoutinfo[0];
+        const insta_pw = accoutinfo[1];
         try {
             //페이지로 가라
             await page.goto('https://www.instagram.com/accounts/login/');

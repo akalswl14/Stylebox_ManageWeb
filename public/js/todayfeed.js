@@ -1,3 +1,27 @@
+$(document).ready(function () {
+    $('#crawling_button').click(function () {
+        $('#crawling_button').hide();
+        $.ajax({
+            type: "get",
+            url: "http://localhost:3001/firstcrawling"
+        });
+    });
+    $('#checkstatus_button').click(function () {
+        $.ajax({
+            type: "get",
+            timeout: 0,
+            url: "/getfeed/crawlingstatus",
+            success: function (result) {
+                if (result.status == true) {
+                    alert('Still crawling');
+                } else{
+                    alert('Crawling is not running');
+                }
+            }
+        });
+    });
+});
+
 function check_all(f) {
     var chk = document.getElementsByName("chkbox");
     for (i = 0; i < chk.length; i++)
@@ -14,6 +38,9 @@ function is_checked(elements_name) {
     return checked;
 }
 function fboardlist_submit(f) {
+    if(document.pressed == "check crawling"){
+        return true;
+    }
     if (!is_checked("chkbox")) {
         alert("check brand to" + document.pressed + "at least one.");
         return false;

@@ -2,9 +2,16 @@ var fs = require('fs')
 
 var GetData = {
     renderdata: function (req, res) {
+        var data = { todaydata: '' ,lastupdatedate:'', icondata:''};
+        var par = JSON.parse(fs.readFileSync('public/json/LastUpdateDate.json', 'utf8'));
+        data.lastupdatedate = par['lastupdatedate'];
+        if(par['crawlingstatus']==true){
+            data.icondata = '<button id="crawling_button" type="button" style="display:none"><i class="fa fa-refresh"></i></button>';
+        }else{
+            data.icondata = '<button id="crawling_button" type="button"><i class="fa fa-refresh"></i></button>'
+        }
         // Parse brand.json
         var par = JSON.parse(fs.readFileSync('public/json/brand.json', 'utf8'));
-        var data = { todaydata: '' };
         var jsondata = "";
         // Add Brand Information as array to dataArray
         for (var key in par) {

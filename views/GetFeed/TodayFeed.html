@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/basic.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="/js/todayfeed.js"></script>
 </head>
 
@@ -23,6 +24,11 @@
     <div class="container">
         <form name="fboardlist" id="fboardlist" onsubmit="return fboardlist_submit(this);" method="post">
             <div class="btn_fixed_top">
+                <div class="lastupdatedate">
+                    <%- lastupdatedate %>
+                </div>
+                <%- icondata %>
+                <input id="checkstatus_button" type="button" name="act_button" value="check crawling" onclick="document.pressed=this.value" class="btn_02 btn">
                 <input type="submit" name="act_button" value="modify reviewstatus" onclick="document.pressed=this.value"
                     class="btn_02 btn">
                 <input type="text" name="input_comments">

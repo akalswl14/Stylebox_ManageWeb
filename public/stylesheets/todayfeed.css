@@ -42,3 +42,13 @@ th button{
   background: none;
   color: rgb(224, 255, 255);
 }
+#crawling_button{
+  border:none;
+  background: none;
+  font-size: 24px;
+}
+.lastupdatedate{
+  display: inline-block;
+  font-size: 24px;
+  font-weight: bold;
+}

@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 var EditJson = {
-    edit_brandexcel: function (req, res) {
+    edit_brandexcel: function (JsonData, res) {
         var DataBuffer = fs.readFileSync('public/json/parse_brand.json');
         var ExcelJsonData = JSON.parse(DataBuffer.toString());
         DataBuffer = fs.readFileSync('public/json/brand.json');

@@ -1,5 +1,5 @@
 # Stylebox_ManageWeb
-ManagerWeb for Stylebox
+ManagerWeb for Stylebox - for test
 
 #### 유의사항
 
